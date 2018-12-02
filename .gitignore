@@ -1,0 +1,6 @@
+.stack-work/
+advent-of-code.cabal
+*~
+out/*
+.idea/*
+*.iml
