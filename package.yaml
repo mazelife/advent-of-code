@@ -3,24 +3,18 @@ version:             0.1.0.0
 github:              "mazelife/advent-of-code"
 license:             BSD3
 author:              "James Stevenson"
-copyright:           "2018 Author name here"
+copyright:           "2018 James Stevenson"
+synopsis:            "Solutions to the 2018 Advent of Code Challenge"
 
 extra-source-files:
 - README.rst
 
 data-files:
 - data/day25.txt
+- data/day24.txt
 
 
-
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
-
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.rst file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/advent-of-code#readme>
+description:         Please see the README on GitHub at <https://github.com/mazelife/advent-of-code#readme>
 
 ghc-options:
 - -Wall
@@ -61,6 +55,9 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - advent-of-code
+    - test-framework
+    - test-framework-hunit
+    - HUnit
     default-extensions:
     - OverloadedStrings
     - GeneralizedNewtypeDeriving
