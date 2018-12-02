@@ -3,7 +3,7 @@ module Lib
     ) where
 
 
-import qualified Day25 as Day25
+import qualified Day25
 
 
 solveDays :: IO ()
