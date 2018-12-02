@@ -3,6 +3,7 @@ module Day25 (solveDay) where
 import Prelude hiding (readFile, readList)
 import Paths_advent_of_code
 
+import           Control.Monad
 import           Data.Monoid
 import qualified Data.Set as Set
 import qualified Data.Text as T
@@ -63,22 +64,17 @@ What is the first frequency your device reaches twice?
 
  -}
 
--- | A frequency is an integer, and also a monoid, where the binary operator
--- is addition and the identity element is zero.
 type Frequency = Sum Int
-
-mkFrequency :: Int -> Frequency
-mkFrequency = Sum
-
--- | Read a file with a list of frequencies, one per line.
-readList :: FilePath -> IO [Frequency]
-readList = fmap (map (parseInt . T.strip) . T.lines) . readFile
 
 -- | Convert a textual representation (e.g. +5, -30) to a Frequency.
 parseInt:: T.Text -> Frequency
 parseInt txt = case signed decimal txt of
   Left _ -> mempty
-  Right (i, _) -> mkFrequency i
+  Right (i, _) -> Sum i
+
+-- | Read a file with a list of frequency changes, one per line.
+readList :: FilePath -> IO [Frequency]
+readList = fmap (map (parseInt . T.strip) . T.lines) . readFile
 
 -- | Find the first time something is repeated in a list of things.
 findFirstRepetition :: Ord a => Set.Set a -> [a] -> Maybe a
@@ -94,8 +90,7 @@ findFirstFrequencyRepetition initial fs = findFirstRepetition Set.empty fStream
 
 solveDay :: IO ()
 solveDay = do
-  pth <- getDataFileName "data/day25.txt"
-  fs <- readList pth
-  let solution  = findFirstFrequencyRepetition mempty fs
+  let fs = (getDataFileName >=> readList) "data/day25.txt"
+  solution <- fmap (findFirstFrequencyRepetition mempty) fs
   putStrLn (case solution of Just answer -> show (getSum answer)
                              Nothing     -> "no answer found!")
